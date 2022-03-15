@@ -20,12 +20,12 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDyD-d6168fCqpxYr8U88pjatQOylJyV2c",
-  authDomain: "crwn-clothing-db-ba2bb.firebaseapp.com",
-  projectId: "crwn-clothing-db-ba2bb",
-  storageBucket: "crwn-clothing-db-ba2bb.appspot.com",
-  messagingSenderId: "792032196614",
-  appId: "1:792032196614:web:97f1ab84d579be0a612b87"
+    apiKey: "AIzaSyDyD-d6168fCqpxYr8U88pjatQOylJyV2c",
+    authDomain: "crwn-clothing-db-ba2bb.firebaseapp.com",
+    projectId: "crwn-clothing-db-ba2bb",
+    storageBucket: "crwn-clothing-db-ba2bb.appspot.com",
+    messagingSenderId: "792032196614",
+    appId: "1:792032196614:web:97f1ab84d579be0a612b87"
 };
 
 // Initialize Firebase
@@ -51,10 +51,26 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 
     //Check if there's an existing document reference, takes the DB - DB specified collection 'users' - collection Identifier (the id of the user that is authenticated)
     const userDocRef = doc(db, 'users', userAuth.uid);
-
     console.log(userDocRef);
 
     const userSnapshot = await getDoc(userDocRef);
-
     console.log(userSnapshot);
+    
+    if(!userSnapshot.exists()){
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+
+        try {
+            await setDoc(userDocRef, {
+                displayName,
+                email,
+                createdAt
+            })
+        }
+        catch(error){
+            console.log('Error creating the user', error)
+        }
+    }
+
+    return userDocRef;
 }
