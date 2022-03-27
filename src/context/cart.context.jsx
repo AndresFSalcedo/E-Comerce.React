@@ -17,11 +17,16 @@ const addCartItem = (cartItems, productToAdd) => {
    return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
 
+const removeCartItem = (
+   
+)
+
 export const CartContext = createContext({
    isCartOpen: false,
    setIsCartOpen: () => {},
    cartItems: [],
    addItemToCart: () => {},
+   removeItemFromCart: () => {},
    cartCount: 0,
 });
 
@@ -39,6 +44,10 @@ export const CartProvider = ({ children }) => {
    }, [cartItems]);
 
    const addItemToCart = (productToAdd) => {
+      setCartItems(addCartItem(cartItems, productToAdd));
+   };
+
+   const removeItemFromCart = (cartItemToRemove => {
       setCartItems(addCartItem(cartItems, productToAdd));
    };
 
