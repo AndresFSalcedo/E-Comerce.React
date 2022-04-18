@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { async } from '@firebase/util';
 import { initializeApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,6 +22,8 @@ import {
    setDoc,
    collection,
    writeBatch,
+   query,
+   getDocs,
 } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -70,6 +73,21 @@ export const addCollectionAndDocuments = async (
    await batch.commit();
    console.log('done');
 };
+
+//Method that perfoms a GET action
+export const getCategoriesAndDocuments = async () => {
+   const collectionRef = collection(db, 'categories');
+   const q = query(collectionRef);
+
+   const querySnapshot = await getDocs(q);
+   const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+      const { title, items } = docSnapshot.data();
+      acc[title.toLowerCase()] = items;
+      return acc;
+   }, {});
+
+   return categoryMap;
+}
 
 //Method that take the data that we are getting from the auth service (sigInWithGooglePopup succeeded) and store that inside firestore (our data base)
 export const createUserDocumentFromAuth = async (
