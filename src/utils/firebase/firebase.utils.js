@@ -80,13 +80,7 @@ export const getCategoriesAndDocuments = async () => {
    const q = query(collectionRef);
 
    const querySnapshot = await getDocs(q);
-   const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-      const { title, items } = docSnapshot.data();
-      acc[title.toLowerCase()] = items;
-      return acc;
-   }, {});
-
-   return categoryMap;
+   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 }
 
 //Method that take the data that we are getting from the auth service (sigInWithGooglePopup succeeded) and store that inside firestore (our data base)
