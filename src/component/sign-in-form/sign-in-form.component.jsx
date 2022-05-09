@@ -44,7 +44,7 @@ const SignInForm = () => {
                break;
 
             default:
-               console.log(error);
+               console.log('error', error);
          }
       }
    };
