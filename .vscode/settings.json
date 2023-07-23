@@ -1,5 +1,6 @@
 {
     "prettier.tabWidth": 3,
     "prettier.singleQuote": true,
-    "prettier.jsxSingleQuote": true
+    "prettier.jsxSingleQuote": true,
+    "editor.fontFamily": "Operator Mono Lig, Menlo, Monaco, 'Courier New', monospace"
 }
